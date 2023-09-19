@@ -29,7 +29,7 @@ from std_msgs.msg import String
 class MinimalPublisher(Node):
     def __init__(self):
         super().__init__("minimal_publisher")
-        self.publisher = self.create_publisher(String, "topic", 10)
+        self.publisher = self.create_publisher(MultiDOFJointTrajectory , "topic", 10)
         
 
         general_obstacles_list = [

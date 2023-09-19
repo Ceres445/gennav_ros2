@@ -4,6 +4,7 @@ from gennav.utils.common import Velocity
 from rclpy import duration
 from std_msgs.msg import Header
 
+
 import transforms3d
 from gennav import utils as utils
 from gennav.utils import RobotState, Trajectory
@@ -40,7 +41,7 @@ def traj_to_msg(traj):
         print("positions: ", state.position.x, state.position.y, state.position.z)
         # type erroring out
         transforms = Transform(
-            translation=Point(x=float(state.position.x), y=float(state.position.y), z=float(state.position.z)),
+            translation=Vector3(x=float(state.position.x), y=float(state.position.y), z=float(state.position.z)),
             rotation=Quaternion(
                 x=quaternion[0], y=quaternion[1], z=quaternion[2], w=quaternion[3]
             ),
@@ -49,8 +50,7 @@ def traj_to_msg(traj):
             transforms=[transforms],
             velocities=[velocity],
             accelerations=[acceleration],
-            time_from_start=duration.Duration.from_msg(time.Duration(time.time())),
-        )
+            time_from_start=duration.Duration(seconds=time()).to_msg(),)
         traj_msg.points.append(traj_point)
 
     return traj_msg

@@ -13,7 +13,7 @@ class Commander(rclpy.node.Node):
         planner (gennav.planners.Planner): object of the Planner class for path planning algorithms
         env (gennav.envs.Environment): object of the Environment class for an environment
         msg_dtype (ROS Message): Type of message used for envrionment data
-        replan_interval (rclpy.duration.Duration): Desired period between callbacks. Defaults to 1s
+        replan_interval (int (seconds)): Desired period between callbacks. Defaults to 1s
     """
 
     def __init__(
@@ -21,7 +21,7 @@ class Commander(rclpy.node.Node):
         planner,
         env,
         msg_dtype,
-        replan_interval=rclpy.duration.Duration(seconds=1),
+        replan_interval=1,
     ):
         # Initialise commander node
         super().__init__("commander")
@@ -79,7 +79,7 @@ class Commander(rclpy.node.Node):
 
         # Keep replanning at specified intervals
         self.timer = self.create_timer(
-            rclpy.duration.Duration(self.replan_interval), replan
+            self.replan_interval, replan
         )
 
     def _publish_traj(self, traj):
